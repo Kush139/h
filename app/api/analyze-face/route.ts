@@ -1,4 +1,3 @@
-// This file is the Next.js API route for the face analysis app.
 // It handles POST requests containing an image, analyzes it using the Gemini API,
 // and returns a humorous "elevated" score and analysis.
 
@@ -82,7 +81,7 @@ If you can't see a face clearly enough to analyze, mention that and return -1. I
     const responseText = result.response.candidates?.[0]?.content?.parts?.[0]?.text
 
     if (!responseText) {
-      return NextResponse.json({ error: "Gemini API did not return a valid response." }, { status: 500 });
+      return NextResponse.json({ error: "Gemini API did not return a valid response." }, { status: 500 })
     }
 
     // Parse the JSON response from the model.
@@ -90,6 +89,7 @@ If you can't see a face clearly enough to analyze, mention that and return -1. I
     try {
       parsedResult = JSON.parse(responseText)
     } catch (parseError) {
+      console.error("Failed to parse Gemini JSON:", parseError)
       // If JSON parsing fails, create a fallback response.
       const score = Math.floor(Math.random() * 100)
       parsedResult = {
